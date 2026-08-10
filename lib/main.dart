@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:gaspos/pages/business/business_list_page.dart';
+import 'package:gaspos/providers/business_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   // 1. Initialize any bindings or plugins here (e.g., Firebase, Hive)
   WidgetsFlutterBinding.ensureInitialized();
 
   // 2. Run the app
-  runApp(const MyApp());
+  // runApp(const MyApp());
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BusinessProvider>(
+          create: (context) => BusinessProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 // The Root Widget: Handles global app configuration
@@ -51,6 +65,13 @@ class HomePage extends StatelessWidget {
         onPressed: () {
           // TODO: Add action
           debugPrint('Button pressed!');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BusinessListPage(),
+            ),
+          );
+
         },
         child: const Icon(Icons.add),
       ),
