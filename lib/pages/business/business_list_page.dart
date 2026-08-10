@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaspos/pages/business/business_create_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/business_provider.dart';
@@ -16,6 +17,16 @@ class _BusinessListPageState extends State<BusinessListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Business List"),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BusinessCreatePage(),
+              ),
+            );
+          }, icon: Icon(Icons.add))
+        ],
       ),
       body: Center(
         child: ListView.separated(
