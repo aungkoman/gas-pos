@@ -11,7 +11,8 @@ class BusinessCreatePage extends StatefulWidget {
 
 class _BusinessCreatePageState extends State<BusinessCreatePage> {
 
-  TextEditingController _nameTec = TextEditingController();
+  final TextEditingController _nameTec = TextEditingController();
+  final TextEditingController _descriptionTec = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +29,16 @@ class _BusinessCreatePageState extends State<BusinessCreatePage> {
               hintText: 'Enter New Business Name',
             ),
           ),
+          TextField(
+            controller: _descriptionTec,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter New Business Description',
+            ),
+          ),
           
           ElevatedButton(onPressed: (){
-            Provider.of<BusinessProvider>(context, listen : false).createNewBusiness( name: _nameTec.text);
+            Provider.of<BusinessProvider>(context, listen : false).createNewBusiness( name: _nameTec.text, description: _descriptionTec.text);
             Navigator.pop(context);
           }, child: Text("Create New Business"))
           
