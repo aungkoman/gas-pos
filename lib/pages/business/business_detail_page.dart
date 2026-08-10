@@ -25,7 +25,16 @@ class _BusinessDetailPageState extends State<BusinessDetailPage> {
                 builder: (context) => const BusinessEditPage(),
               ),
             );
-          }, icon: Icon(Icons.edit))
+          }, icon: Icon(Icons.edit)),
+          IconButton(onPressed: () async {
+            bool result = await showConfirmationDialog(context);
+            if(result == true){
+              int id = Provider.of<BusinessProvider>(context, listen: false).selectedBusiness.id;
+              Provider.of<BusinessProvider>(context, listen: false).deleteBusiness(id: id);
+              Navigator.pop(context);
+            }
+
+          }, icon: Icon(Icons.delete, color: Colors.red,))
         ],
       ),
       body: Column(
@@ -36,4 +45,39 @@ class _BusinessDetailPageState extends State<BusinessDetailPage> {
       ),
     );
   }
+
+
+  Future<bool> showConfirmationDialog(BuildContext context) async {
+    // showDialog returns the value passed to Navigator.pop
+    final result = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false, // User must tap a button to close
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Action'),
+          content: const Text('Are you sure you want to proceed with this task?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                // Closes the dialog and returns false
+                Navigator.of(context).pop(false);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                // Closes the dialog and returns true
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    // Return false if the dialog was dismissed without a selection
+    return result ?? false;
+  }
+
 }

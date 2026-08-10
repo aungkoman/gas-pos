@@ -42,4 +42,18 @@ class BusinessProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+
+  void deleteBusiness({required int id}){
+    // 1. Find the index of the business with the matching ID
+    int index = businesses.indexWhere((business) => business.id == id);
+
+    // 2. If the business exists in the list (-1 means not found)
+    if (index != -1) {
+      businesses.removeAt(index);
+      // 4. Notify listeners to rebuild the UI
+      notifyListeners();
+    }
+  }
 }
