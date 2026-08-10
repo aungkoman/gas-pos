@@ -20,4 +20,26 @@ class BusinessProvider extends ChangeNotifier {
     selectedBusiness = business;
     notifyListeners();
   }
+
+  void updateBusiness({required int id, required String name, required String description}){
+    // 1. Find the index of the business with the matching ID
+    int index = businesses.indexWhere((business) => business.id == id);
+
+    // 2. If the business exists in the list (-1 means not found)
+    if (index != -1) {
+      // Create the updated business instance
+      Business updatedBusiness = Business(id: id, name: name, description: description);
+
+      // Update the item in the list
+      businesses[index] = updatedBusiness;
+
+      // 3. Keep the selectedBusiness in sync if it's the one being updated
+      if (selectedBusiness.id == id) {
+        selectedBusiness = updatedBusiness;
+      }
+
+      // 4. Notify listeners to rebuild the UI
+      notifyListeners();
+    }
+  }
 }

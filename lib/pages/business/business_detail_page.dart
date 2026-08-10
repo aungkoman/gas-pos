@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gaspos/pages/business/business_edit_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/business_provider.dart';
@@ -16,6 +17,16 @@ class _BusinessDetailPageState extends State<BusinessDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Business Detail"),
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BusinessEditPage(),
+              ),
+            );
+          }, icon: Icon(Icons.edit))
+        ],
       ),
       body: Column(
         children: [
