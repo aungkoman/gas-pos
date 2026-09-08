@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gaspos/pages/branch/branch_list_page.dart';
 import 'package:gaspos/pages/business/business_list_page.dart';
+import 'package:gaspos/providers/branch_provider.dart';
 import 'package:gaspos/providers/business_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +17,9 @@ void main() {
       providers: [
         ChangeNotifierProvider<BusinessProvider>(
           create: (context) => BusinessProvider(),
+        ),
+        ChangeNotifierProvider<BranchProvider>(
+          create: (context) => BranchProvider(),
         ),
       ],
       child: const MyApp(),
@@ -55,26 +60,38 @@ class HomePage extends StatelessWidget {
         title: const Text('Home'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: const Center(
-        child: Text(
-          'Welcome to your new app!',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Add action
-          debugPrint('Button pressed!');
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const BusinessListPage(),
-            ),
-          );
+      body: ListView(
+        children: [
+          ListTile(
+            leading: Icon(Icons.ac_unit),
+            title: Text("Business"),
+            trailing: Icon(Icons.arrow_forward_ios),
 
-        },
-        child: const Icon(Icons.add),
-      ),
+            onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BusinessListPage(),
+              ),
+            );
+          },),
+
+          ListTile(
+
+            leading: Icon(Icons.cabin_sharp),
+            title: Text("Branch"),
+
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BranchListPage(),
+              ),
+            );
+          },)
+        ],
+      )
     );
   }
 }
